@@ -1,0 +1,39 @@
+#!/bin/bash
+# Update the system
+sudo yum update -y
+
+# Install Java JDK for Amazon Corretto 17
+sudo yum install java-17-amazon-corretto-devel -y
+
+# Set JAVA_HOME environment variable
+echo "export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto" >> ~/.bashrc
+echo "export PATH=\$JAVA_HOME/bin:\$PATH" >> ~/.bashrc
+source ~/.bashrc
+
+# Install Git
+sudo yum install git -y
+
+# Install Maven (or you can use Gradle if your project uses Gradle)
+sudo amazon-linux-extras install maven3.8 -y
+
+# Clone the GitHub repository
+git clone https://github.com/mahesh430/aws-inventory.git
+
+# Navigate to the project directory
+cd aws-inventory
+
+# Ensure target directory exists and set permissions
+mkdir -p target/classes
+sudo chmod -R 777 target
+
+# Build the project using Maven
+./mvnw clean package
+
+# Kill any existing process running on port 8080
+sudo kill -9 $(sudo lsof -t -i:8080)
+
+# Navigate to the directory containing the JAR file
+cd target
+
+# Run the Spring Boot application
+java -jar inventory-0.0.1-SNAPSHOT.jar
