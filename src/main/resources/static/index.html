@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Inventory </title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<style>
+    
+    .select2-container .select2-selection--single{
+    height:34px !important;
+}
+.select2-container--default .select2-selection--single{
+         border: 1px solid #ccc !important; 
+     border-radius: 0px !important; 
+}
+body {
+	color: #566787;
+	background: #f5f5f5;
+	font-family: 'Varela Round', sans-serif;
+	font-size: 13px;
+}
+.table-responsive {
+    margin: 30px 0;
+}
+.table-wrapper {
+	background: #fff;
+	padding: 20px 25px;
+	border-radius: 3px;
+	min-width: 1000px;
+	box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+.table-title {
+	padding-bottom: 15px;
+	background: #435d7d;
+	color: #fff;
+	padding: 16px 30px;
+	min-width: 100%;
+	margin: -20px -25px 10px;
+	border-radius: 3px 3px 0 0;
+}
+.table-title h2 {
+	margin: 5px 0 0;
+	font-size: 24px;
+}
+.table-title .btn-group {
+	float: right;
+}
+.table-title .btn {
+	color: #fff;
+	float: right;
+	font-size: 13px;
+	border: none;
+	min-width: 50px;
+	border-radius: 2px;
+	border: none;
+	outline: none !important;
+	margin-left: 10px;
+}
+.table-title .btn i {
+	float: left;
+	font-size: 21px;
+	margin-right: 5px;
+}
+.table-title .btn span {
+	float: left;
+	margin-top: 2px;
+}
+table.table tr th, table.table tr td {
+	border-color: #e9e9e9;
+	padding: 12px 15px;
+	vertical-align: middle;
+}
+table.table tr th:first-child {
+	width: 60px;
+}
+table.table tr th:last-child {
+	width: 100px;
+}
+table.table-striped tbody tr:nth-of-type(odd) {
+	background-color: #fcfcfc;
+}
+table.table-striped.table-hover tbody tr:hover {
+	background: #f5f5f5;
+}
+table.table th i {
+	font-size: 13px;
+	margin: 0 5px;
+	cursor: pointer;
+}
+table.table td:last-child i {
+	opacity: 0.9;
+	font-size: 22px;
+	margin: 0 5px;
+}
+table.table td a {
+	font-weight: bold;
+	color: #566787;
+	display: inline-block;
+	text-decoration: none;
+	outline: none !important;
+}
+table.table td a:hover {
+	color: #2196F3;
+}
+table.table td a.edit {
+	color: #FFC107;
+}
+table.table td a.delete {
+	color: #F44336;
+}
+table.table td i {
+	font-size: 19px;
+}
+table.table .avatar {
+	border-radius: 50%;
+	vertical-align: middle;
+	margin-right: 10px;
+}
+.pagination {
+	float: right;
+	margin: 0 0 5px;
+}
+.pagination li a {
+	border: none;
+	font-size: 13px;
+	min-width: 30px;
+	min-height: 30px;
+	color: #999;
+	margin: 0 2px;
+	line-height: 30px;
+	border-radius: 2px !important;
+	text-align: center;
+	padding: 0 6px;
+}
+.pagination li a:hover {
+	color: #666;
+}
+.pagination li.active a, .pagination li.active a.page-link {
+	background: #03A9F4;
+}
+.pagination li.active a:hover {
+	background: #0397d6;
+}
+.pagination li.disabled i {
+	color: #ccc;
+}
+.pagination li i {
+	font-size: 16px;
+	padding-top: 6px
+}
+.hint-text {
+	float: left;
+	margin-top: 10px;
+	font-size: 13px;
+}
+/* Custom checkbox */
+.custom-checkbox {
+	position: relative;
+}
+.custom-checkbox input[type="checkbox"] {
+	opacity: 0;
+	position: absolute;
+	margin: 5px 0 0 3px;
+	z-index: 9;
+}
+.custom-checkbox label:before{
+	width: 18px;
+	height: 18px;
+}
+.custom-checkbox label:before {
+	content: '';
+	margin-right: 10px;
+	display: inline-block;
+	vertical-align: text-top;
+	background: white;
+	border: 1px solid #bbb;
+	border-radius: 2px;
+	box-sizing: border-box;
+	z-index: 2;
+}
+.custom-checkbox input[type="checkbox"]:checked + label:after {
+	content: '';
+	position: absolute;
+	left: 6px;
+	top: 3px;
+	width: 6px;
+	height: 11px;
+	border: solid #000;
+	border-width: 0 3px 3px 0;
+	transform: inherit;
+	z-index: 3;
+	transform: rotateZ(45deg);
+}
+.custom-checkbox input[type="checkbox"]:checked + label:before {
+	border-color: #03A9F4;
+	background: #03A9F4;
+}
+.custom-checkbox input[type="checkbox"]:checked + label:after {
+	border-color: #fff;
+}
+.custom-checkbox input[type="checkbox"]:disabled + label:before {
+	color: #b8b8b8;
+	cursor: auto;
+	box-shadow: none;
+	background: #ddd;
+}
+/* Modal styles */
+.chartModel .modal .modal-dialog {
+	max-width: 400px;
+}
+.chartModel .modal .modal-header, .modal .modal-body, .modal .modal-footer {
+	padding: 20px 30px;
+}
+.chartModel .modal .modal-content {
+	border-radius: 3px;
+	font-size: 14px;
+}
+.chartModel .modal .modal-footer {
+	background: #ecf0f1;
+	border-radius: 0 0 3px 3px;
+}
+.chartModel .modal .modal-title {
+	display: inline-block;
+}
+.chartModel .modal .form-control {
+	border-radius: 2px;
+	box-shadow: none;
+	border-color: #dddddd;
+}
+.chartModel .modal textarea.form-control {
+	resize: vertical;
+}
+.chartModel .modal .btn {
+	border-radius: 2px;
+	min-width: 100px;
+}
+.chartModel .modal form label {
+	font-weight: normal;
+}
+/*//Drop Down */
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #3e8e41;
+}
+#myInput {
+  box-sizing: border-box;
+  background-image: url('searchicon.png');
+  background-position: 14px 12px;
+  background-repeat: no-repeat;
+  font-size: 16px;
+  padding: 14px 20px 12px 45px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+}
+#myInput:focus {outline: 3px solid #ddd;}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f6f6f6;
+  min-width: 230px;
+  overflow: auto;
+  border: 1px solid #ddd;
+  z-index: 1;
+}
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.dropdown a:hover {background-color: #ddd;}
+.show {display: block;}
+
+
+
+
+/*inventory update model css start */
+#success_tic .page-body{
+  max-width:300px;
+  background-color:#FFFFFF;
+  margin:10% auto;
+}
+ #success_tic .page-body .head{
+  text-align:center;
+}
+/* #success_tic .tic{
+  font-size:186px;
+} */
+#success_tic .close{
+      opacity: 1;
+    position: absolute;
+    right: 0px;
+    font-size: 30px;
+    padding: 3px 15px;
+  margin-bottom: 10px;
+}
+#success_tic .checkmark-circle {
+  width: 150px;
+  height: 150px;
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+}
+.checkmark-circle .background {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: #1ab394;
+  position: absolute;
+}
+#success_tic .checkmark-circle .checkmark {
+  border-radius: 5px;
+}
+#success_tic .checkmark-circle .checkmark.draw:after {
+  -webkit-animation-delay: 300ms;
+  -moz-animation-delay: 300ms;
+  animation-delay: 300ms;
+  -webkit-animation-duration: 1s;
+  -moz-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-timing-function: ease;
+  -moz-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -webkit-animation-name: checkmark;
+  -moz-animation-name: checkmark;
+  animation-name: checkmark;
+  -webkit-transform: scaleX(-1) rotate(135deg);
+  -moz-transform: scaleX(-1) rotate(135deg);
+  -ms-transform: scaleX(-1) rotate(135deg);
+  -o-transform: scaleX(-1) rotate(135deg);
+  transform: scaleX(-1) rotate(135deg);
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+#success_tic .checkmark-circle .checkmark:after {
+  opacity: 1;
+  height: 75px;
+  width: 37.5px;
+  -webkit-transform-origin: left top;
+  -moz-transform-origin: left top;
+  -ms-transform-origin: left top;
+  -o-transform-origin: left top;
+  transform-origin: left top;
+  border-right: 15px solid #fff;
+  border-top: 15px solid #fff;
+  border-radius: 2.5px !important;
+  content: '';
+  left: 35px;
+  top: 80px;
+  position: absolute;
+}
+
+@-webkit-keyframes checkmark {
+  0% {
+    height: 0;
+    width: 0;
+    opacity: 1;
+  }
+  20% {
+    height: 0;
+    width: 37.5px;
+    opacity: 1;
+  }
+  40% {
+    height: 75px;
+    width: 37.5px;
+    opacity: 1;
+  }
+  100% {
+    height: 75px;
+    width: 37.5px;
+    opacity: 1;
+  }
+}
+@-moz-keyframes checkmark {
+  0% {
+    height: 0;
+    width: 0;
+    opacity: 1;
+  }
+  20% {
+    height: 0;
+    width: 37.5px;
+    opacity: 1;
+  }
+  40% {
+    height: 75px;
+    width: 37.5px;
+    opacity: 1;
+  }
+  100% {
+    height: 75px;
+    width: 37.5px;
+    opacity: 1;
+  }
+}
+@keyframes checkmark {
+  0% {
+    height: 0;
+    width: 0;
+    opacity: 1;
+  }
+  20% {
+    height: 0;
+    width: 37.5px;
+    opacity: 1;
+  }
+  40% {
+    height: 75px;
+    width: 37.5px;
+    opacity: 1;
+  }
+  100% {
+    height: 75px;
+    width: 37.5px;
+    opacity: 1;
+  }
+}
+/*inventory update model css end*/
+
+
+</style>
+    
+</head>
+<body>
+    
+<div class="container-xxl">
+	<div class="table-responsive">
+		<div class="table-wrapper">
+			<div class="table-title">
+				<div class="row">
+					<div class="col-sm-6">
+						<h2>AWS <b>Inventory</b></h2>
+					</div>
+
+				</div>
+			</div>
+                    
+                    <div class="">
+	<div class="row">
+	    <form class="col-md-3" id="envBt">
+	        <label>Choose Environment</label>
+	        <select class="form-control select2" id="envDa">
+	           
+	           
+	        </select>
+	    </form>
+            <form class="col-md-3" id="tenBtn">
+	        <label>Choose Customer Name</label>
+                <select class="form-control select2" id="tenId">
+	         
+	           
+	        </select>
+	    </form>
+            <h4>OR</h4>
+            <form class="col-md-3" id="serviceData">
+	        <label>Choose Service Name</label>
+                <select class="form-control select2" id="serviceDropId">
+	           
+                   
+	        </select>
+	    </form>
+            <div style="padding-top:25px">
+                <button class="btn btn-primary btn-sm" id="updateInventory" style="display:none"></button>
+            </div>
+           
+ 	</div>
+</div>
+                    
+                    
+			<table class="table table-striped table-hover" id="inventoryTable">
+				<thead>
+					<tr>
+
+						<th>Environment</th>
+						<th>Customer Name</th>
+						<th>Tenant Id</th>
+						<th>Service</th>
+						<th>PrivateIp</th>
+                                                <th>PublicIp</th>
+                                                <th>Instance Name</th>
+                                                <th>DNS Name</th>
+                                                <th>Instance Type</th>
+                                                <th>Region</th>
+                                                <th>Instance tags</th>
+					</tr>
+				</thead>
+				<tbody id="tbody">
+
+				</tbody>
+<!--                                <tfoot>
+                                    <tr>
+						<th>Environment</th>
+						<th>Customer Name</th>
+						<th>Tenant Id</th>
+                                             
+						<th>Service</th>
+						<th>PrivateIp</th>
+                                                <th>Instance Name</th>
+                                                <th>DNS Name</th>
+                                                <th>Instance Type</th>
+                                                <th>Region</th>
+					</tr>
+                                </tfoot>-->
+                                
+			</table>
+			
+		</div>
+	</div>
+</div>
+    
+
+<!--    inventory model-->
+
+<!-- Modal -->
+<div id="success_tic" class="modal fade chartModel" role="dialog" style="margin-top:25px">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <a class="close" href="#" data-dismiss="modal">&times;</a>
+      <div class="page-body">
+    <div class="head">  
+        <h4 style="margin-top:5px;" class="text-dark">Inventory has been updated</h4>
+<!--      <h4>Inventory has been updated</h4>-->
+    </div>
+
+  <h1 style="text-align:center;"><div class="checkmark-circle">
+  <div class="background"></div>
+  <div class="checkmark draw"></div>
+</div></h1>
+
+  </div>
+</div>
+    </div>
+
+  </div>
+
+
+<!--view tage model-->
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="viewTageModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title" id="exampleModalLabel">Tags</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <div class="modal-body" style="word-break: break-all">
+            <h6 id="viewTagVal" style="color:black"></h6>
+      </div>
+     
+    </div>
+  </div>
+</div>
+
+<!--view tage end-->
+
+<div id="wait" style="display:none;width:69px;height:89px;border:1px solid black;position:fixed;top:40%;left:50%;padding:2px;"><img src='image/loading1.gif' width="64" height="64" /><br><span id="loaderText" style="color:black;font-weight: bold"> Loading</span></div>
+<script>
+    
+   
+    $('.select2').select2();
+   
+        $(document).ready(function (){
+            
+          var environment;
+          var region;
+          
+          
+            var inventoryTable;
+      inventoryTable = $('#inventoryTable').dataTable();
+            
+              $('#serviceDropId').change(function(){
+      
+               if($(this).val()==''){
+                 inventoryTable.api().columns(3).search('').draw();  
+               }else{
+                 inventoryTable.api().columns(3).search("^" + $(this).val() + "$", true, false, true).draw();  
+               }
+
+            });
+            
+            // ajax loader
+             $(document).ajaxStart(function(){
+    $("#wait").css("display", "block");
+  });
+        $(document).ajaxComplete(function(){
+    $("#wait").css("display", "none");
+  });
+  
+             $.ajax({
+    type:'GET',
+     
+    url:'https://xrx4jghx2b.execute-api.us-east-2.amazonaws.com/v1/getenvironment/1',
+    datatype:'JSON',
+    success:function(response){
+   
+     var i;
+        var envData="<option>Select Environment</option>";     
+        $('#envDa').empty();      
+        for(i in response.Items){
+            envData=envData+"<option> "+response.Items[i].Environment.S+"</option>";          
+        } 
+        $('#envDa').append(envData);
+    }
+       }); 
+                            
+ 
+});
+$('#envDa').on('change', function (e) {
+    
+    environment=this.value;
+    $.ajax({
+    type:'GET',
+    
+    url:'https://xrx4jghx2b.execute-api.us-east-2.amazonaws.com/v1/environment/'+environment,
+    datatype:'JSON',
+    success:function(response){
+    
+   // alert( )
+        var i;
+        var tabelData="";
+        $('#tbody').empty();
+        $('#inventoryTable').DataTable().clear().destroy();
+        var cusTent="<option value=''>All Customer</option>";
+         var serviceData="<option value=''>All Service</option>";
+        $('#serviceDropId').empty();
+        var array = [];
+        var customerName=[];
+       
+       //update inventory button show/hide event
+        if(response.Items.length>0){
+            region=response.Items[0].Region.S;
+            $('#updateInventory').show();
+            $('#updateInventory').text("Update inventory for "+environment);
+        }else{
+             $('#updateInventory').hide();
+        }
+        for (i in response.Items) {
+            // to avoid duplicate service name
+          //  alert(response.Items[i].instance_tags.S);
+            if(array.indexOf(response.Items[i].Service.S)==-1){
+              array.push(response.Items[i].Service.S);
+              
+            if(response.Items[i].Service.S!==''){
+            serviceData=serviceData+"<option> "+response.Items[i].Service.S+"</option>";
+            }   
+            }
+           // to avoid duplicate customer name
+           if(customerName.indexOf(response.Items[i].Customer.S+'-'+response.Items[i].TenantId.S)==-1){
+              customerName.push(response.Items[i].Customer.S+'-'+response.Items[i].TenantId.S);
+              
+           if( response.Items[i].Customer.S!='' && response.Items[i].Customer.S!='-'&& response.Items[i].TenantId.S!=='' &&response.Items[i].TenantId.S != "-" ){
+                      cusTent=cusTent+"<option value="+response.Items[i].TenantId.S+"> "+response.Items[i].Customer.S+'-'+response.Items[i].TenantId.S+"</option>";
+            }  
+            }
+            
+    tabelData=tabelData+"<tr><td>"+response.Items[i].Environment.S+"</td>\n\
+<td>"+response.Items[i].Customer.S+"</td>\n\
+<td>"+response.Items[i].TenantId.S+"</td>\n\
+<td>"+response.Items[i].Service.S+"</td>\n\
+<td>"+response.Items[i].PrivateIP.S+"</td>\n\
+<td>"+response.Items[i].PublicIP.S+"</td>\n\
+<td>"+response.Items[i].InstanceName.S+"</td>\n\
+<td>"+response.Items[i].DNSName.S+"</td>\n\
+<td>"+response.Items[i].InstanceType.S+"</td>\n\
+<td>"+response.Items[i].Region.S+"</td>";
+            if("instance_tags" in response.Items[i] && response.Items[i].instance_tags!==""){
+               tabelData=tabelData+" <td><a href='#'  data-toggle='modal' data-target='#viewTageModel' data-value='"+response.Items[i].instance_tags.S+"' onclick='clickEvent(this)' style='color:blue'>View Tag</a><input type='hidden' value='"+response.Items[i].instance_tags.S+"' ></td></tr>";  //response.Items[i].instance_tags.S
+            }else{
+            tabelData=tabelData+" <td></td></tr>";  
+
+            }
+            
+  }
+        $('#tenId').empty();
+        $('#tenId').append(cusTent);
+         $('#serviceDropId').append(serviceData);
+    
+    
+ $('#tbody').append(tabelData);
+        
+        $('#inventoryTable').DataTable();   
+    }
+       }); 
+});
+
+$('#tenId').on('change', function (e) {
+    
+    
+    var tenantId=this.value;
+    
+    if(tenantId==''){
+        $('#envDa').change();
+    }else{
+
+    $.ajax({
+    type:'GET',
+    url:'https://xrx4jghx2b.execute-api.us-east-2.amazonaws.com/v1/tenantid/'+tenantId,
+    datatype:'JSON',
+    success:function(response){
+  
+  
+        var i;
+        var tabelData="";
+        $('#tbody').empty();
+        $('#inventoryTable').DataTable().clear().destroy();
+        var serviceData="<option value=''>All Service</option>";
+        $('#serviceDropId').empty();
+        var array = [];
+        for (i in response.Items) {
+             // to avoid duplicate service name
+            if(array.indexOf(response.Items[i].Service.S)==-1){
+              array.push(response.Items[i].Service.S);
+              
+            if(response.Items[i].Service.S!==''){
+            serviceData=serviceData+"<option> "+response.Items[i].Service.S+"</option>";
+            }   
+            }
+    tabelData=tabelData+"<tr><td>"+response.Items[i].Environment.S+"</td>\n\
+<td>"+response.Items[i].Customer.S+"</td>\n\
+<td>"+response.Items[i].TenantId.S+"</td>\n\
+<td>"+response.Items[i].Service.S+"</td>\n\
+<td>"+response.Items[i].PrivateIP.S+"</td>\n\
+<td>"+response.Items[i].PublicIP.S+"</td>\n\
+<td>"+response.Items[i].InstanceName.S+"</td>\n\
+<td>"+response.Items[i].DNSName.S+"</td>\n\
+<td>"+response.Items[i].InstanceType.S+"</td>\n\
+<td>"+response.Items[i].Region.S+"</td>";
+            if("instance_tags" in response.Items[i] && response.Items[i].instance_tags!==""){
+               tabelData=tabelData+" <td><a href='#'  data-toggle='modal' data-target='#viewTageModel' data-value='"+response.Items[i].instance_tags.S+"' onclick='clickEvent(this)' style='color:blue'>View Tag</a><input type='hidden' value='"+response.Items[i].instance_tags.S+"' ></td></tr>";  //response.Items[i].instance_tags.S
+            }else{
+            tabelData=tabelData+" <td></td></tr>";  
+
+            }
+  }
+      
+       
+    
+    
+ $('#tbody').append(tabelData);
+ $('#serviceDropId').append(serviceData);
+        
+        $('#inventoryTable').DataTable();  
+    }
+       }); 
+   }
+});
+
+// update inventory 
+$('#updateInventory').click(function(){
+    
+$("#loaderText").text("Updating");
+    var lastChar = region[region.length -1];
+    if(lastChar>='a'&& lastChar<='z'){
+        region=region.slice(0,-1);       
+    }
+    $.ajax({
+        url:"https://8pys1qif2d.execute-api.us-east-2.amazonaws.com/v1/environment?env="+environment+"&region="+region,
+        datatype:'JSON',
+        success:function(response){  
+           $("#loaderText").text("Loading");
+            $('#envDa').change();
+             $('#success_tic').modal('show');
+        }
+    });
+});
+
+
+
+
+function clickEvent(e){
+     var viewTag=$(e).data("value");
+    
+    $('#viewTagVal').html(viewTag);
+    
+}
+
+</script>
+</body>
+</html>
