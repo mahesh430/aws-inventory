@@ -27,7 +27,9 @@ mkdir -p target/classes
 sudo chmod -R 777 target
 
 # Build the project using Maven
-./mvnw clean package
+./mvnw clean
+./mvnw package
+
 
 # Kill any existing process running on port 8080
 sudo kill -9 $(sudo lsof -t -i:8080)
