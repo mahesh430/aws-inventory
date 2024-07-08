@@ -17,13 +17,13 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <style>
-    
+
     .select2-container .select2-selection--single{
     height:34px !important;
 }
 .select2-container--default .select2-selection--single{
-         border: 1px solid #ccc !important; 
-     border-radius: 0px !important; 
+         border: 1px solid #ccc !important;
+     border-radius: 0px !important;
 }
 body {
 	color: #566787;
@@ -444,10 +444,10 @@ table.table .avatar {
 
 
 </style>
-    
+
 </head>
 <body>
-    
+
 <div class="container-xxl">
 	<div class="table-responsive">
 		<div class="table-wrapper">
@@ -459,39 +459,39 @@ table.table .avatar {
 
 				</div>
 			</div>
-                    
+
                     <div class="">
 	<div class="row">
 	    <form class="col-md-3" id="envBt">
 	        <label>Choose Environment</label>
 	        <select class="form-control select2" id="envDa">
-	           
-	           
+
+
 	        </select>
 	    </form>
             <form class="col-md-3" id="tenBtn">
 	        <label>Choose Customer Name</label>
                 <select class="form-control select2" id="tenId">
-	         
-	           
+
+
 	        </select>
 	    </form>
             <h4>OR</h4>
             <form class="col-md-3" id="serviceData">
 	        <label>Choose Service Name</label>
                 <select class="form-control select2" id="serviceDropId">
-	           
-                   
+
+
 	        </select>
 	    </form>
             <div style="padding-top:25px">
                 <button class="btn btn-primary btn-sm" id="updateInventory" style="display:none"></button>
             </div>
-           
+
  	</div>
 </div>
-                    
-                    
+
+
 			<table class="table table-striped table-hover" id="inventoryTable">
 				<thead>
 					<tr>
@@ -517,7 +517,7 @@ table.table .avatar {
 						<th>Environment</th>
 						<th>Customer Name</th>
 						<th>Tenant Id</th>
-                                             
+
 						<th>Service</th>
 						<th>PrivateIp</th>
                                                 <th>Instance Name</th>
@@ -526,13 +526,13 @@ table.table .avatar {
                                                 <th>Region</th>
 					</tr>
                                 </tfoot>-->
-                                
+
 			</table>
-			
+
 		</div>
 	</div>
 </div>
-    
+
 
 <!--    inventory model-->
 
@@ -544,7 +544,7 @@ table.table .avatar {
     <div class="modal-content">
       <a class="close" href="#" data-dismiss="modal">&times;</a>
       <div class="page-body">
-    <div class="head">  
+    <div class="head">
         <h4 style="margin-top:5px;" class="text-dark">Inventory has been updated</h4>
 <!--      <h4>Inventory has been updated</h4>-->
     </div>
@@ -578,7 +578,7 @@ table.table .avatar {
         <div class="modal-body" style="word-break: break-all">
             <h6 id="viewTagVal" style="color:black"></h6>
       </div>
-     
+
     </div>
   </div>
 </div>
@@ -587,29 +587,29 @@ table.table .avatar {
 
 <div id="wait" style="display:none;width:69px;height:89px;border:1px solid black;position:fixed;top:40%;left:50%;padding:2px;"><img src='image/loading1.gif' width="64" height="64" /><br><span id="loaderText" style="color:black;font-weight: bold"> Loading</span></div>
 <script>
-    
-   
+
+
     $('.select2').select2();
-   
+
         $(document).ready(function (){
-            
+
           var environment;
           var region;
-          
-          
+
+
             var inventoryTable;
       inventoryTable = $('#inventoryTable').dataTable();
-            
+
               $('#serviceDropId').change(function(){
-      
+
                if($(this).val()==''){
-                 inventoryTable.api().columns(3).search('').draw();  
+                 inventoryTable.api().columns(3).search('').draw();
                }else{
-                 inventoryTable.api().columns(3).search("^" + $(this).val() + "$", true, false, true).draw();  
+                 inventoryTable.api().columns(3).search("^" + $(this).val() + "$", true, false, true).draw();
                }
 
             });
-            
+
             // ajax loader
              $(document).ajaxStart(function(){
     $("#wait").css("display", "block");
@@ -617,36 +617,36 @@ table.table .avatar {
         $(document).ajaxComplete(function(){
     $("#wait").css("display", "none");
   });
-  
+
              $.ajax({
     type:'GET',
-     
+
     url:'https://qdylk5zwta.execute-api.us-east-1.amazonaws.com/dev/environment',
     datatype:'JSON',
     success:function(response){
-   
+
      var i;
-        var envData="<option>Select Environment</option>";     
-        $('#envDa').empty();      
+        var envData="<option>Select Environment</option>";
+        $('#envDa').empty();
         for(i in response.Items){
-            envData=envData+"<option> "+response.Items[i].Environment.S+"</option>";          
-        } 
+            envData=envData+"<option> "+response.Items[i].Environment.S+"</option>";
+        }
         $('#envDa').append(envData);
     }
-       }); 
-                            
- 
+       });
+
+
 });
 $('#envDa').on('change', function (e) {
-    
+
     environment=this.value;
     $.ajax({
     type:'GET',
-    
+
     url:'https://qdylk5zwta.execute-api.us-east-1.amazonaws.com/dev/details?environment='+environment,
     datatype:'JSON',
     success:function(response){
-    
+
    // alert( )
         var i;
         var tabelData="";
@@ -657,7 +657,7 @@ $('#envDa').on('change', function (e) {
         $('#serviceDropId').empty();
         var array = [];
         var customerName=[];
-       
+
        //update inventory button show/hide event
         if(response.Items.length>0){
             region=response.Items[0].Region.S;
@@ -671,20 +671,20 @@ $('#envDa').on('change', function (e) {
           //  alert(response.Items[i].instance_tags.S);
             if(array.indexOf(response.Items[i].Service.S)==-1){
               array.push(response.Items[i].Service.S);
-              
+
             if(response.Items[i].Service.S!==''){
             serviceData=serviceData+"<option> "+response.Items[i].Service.S+"</option>";
-            }   
+            }
             }
            // to avoid duplicate customer name
            if(customerName.indexOf(response.Items[i].Customer.S+'-'+response.Items[i].TenantId.S)==-1){
               customerName.push(response.Items[i].Customer.S+'-'+response.Items[i].TenantId.S);
-              
+
            if( response.Items[i].Customer.S!='' && response.Items[i].Customer.S!='-'&& response.Items[i].TenantId.S!=='' &&response.Items[i].TenantId.S != "-" ){
                       cusTent=cusTent+"<option value="+response.Items[i].TenantId.S+"> "+response.Items[i].Customer.S+'-'+response.Items[i].TenantId.S+"</option>";
-            }  
             }
-            
+            }
+
     tabelData=tabelData+"<tr><td>"+response.Items[i].Environment.S+"</td>\n\
 <td>"+response.Items[i].Customer.S+"</td>\n\
 <td>"+response.Items[i].TenantId.S+"</td>\n\
@@ -698,28 +698,28 @@ $('#envDa').on('change', function (e) {
             if("instance_tags" in response.Items[i] && response.Items[i].instance_tags!==""){
                tabelData=tabelData+" <td><a href='#'  data-toggle='modal' data-target='#viewTageModel' data-value='"+response.Items[i].instance_tags.S+"' onclick='clickEvent(this)' style='color:blue'>View Tag</a><input type='hidden' value='"+response.Items[i].instance_tags.S+"' ></td></tr>";  //response.Items[i].instance_tags.S
             }else{
-            tabelData=tabelData+" <td></td></tr>";  
+            tabelData=tabelData+" <td></td></tr>";
 
             }
-            
+
   }
         $('#tenId').empty();
         $('#tenId').append(cusTent);
          $('#serviceDropId').append(serviceData);
-    
-    
+
+
  $('#tbody').append(tabelData);
-        
-        $('#inventoryTable').DataTable();   
+
+        $('#inventoryTable').DataTable();
     }
-       }); 
+       });
 });
 
 $('#tenId').on('change', function (e) {
-    
-    
+
+
     var tenantId=this.value;
-    
+
     if(tenantId==''){
         $('#envDa').change();
     }else{
@@ -729,8 +729,8 @@ $('#tenId').on('change', function (e) {
     url:'https://xrx4jghx2b.execute-api.us-east-2.amazonaws.com/v1/tenantid/'+tenantId,
     datatype:'JSON',
     success:function(response){
-  
-  
+
+
         var i;
         var tabelData="";
         $('#tbody').empty();
@@ -742,10 +742,10 @@ $('#tenId').on('change', function (e) {
              // to avoid duplicate service name
             if(array.indexOf(response.Items[i].Service.S)==-1){
               array.push(response.Items[i].Service.S);
-              
+
             if(response.Items[i].Service.S!==''){
             serviceData=serviceData+"<option> "+response.Items[i].Service.S+"</option>";
-            }   
+            }
             }
     tabelData=tabelData+"<tr><td>"+response.Items[i].Environment.S+"</td>\n\
 <td>"+response.Items[i].Customer.S+"</td>\n\
@@ -760,35 +760,35 @@ $('#tenId').on('change', function (e) {
             if("instance_tags" in response.Items[i] && response.Items[i].instance_tags!==""){
                tabelData=tabelData+" <td><a href='#'  data-toggle='modal' data-target='#viewTageModel' data-value='"+response.Items[i].instance_tags.S+"' onclick='clickEvent(this)' style='color:blue'>View Tag</a><input type='hidden' value='"+response.Items[i].instance_tags.S+"' ></td></tr>";  //response.Items[i].instance_tags.S
             }else{
-            tabelData=tabelData+" <td></td></tr>";  
+            tabelData=tabelData+" <td></td></tr>";
 
             }
   }
-      
-       
-    
-    
+
+
+
+
  $('#tbody').append(tabelData);
  $('#serviceDropId').append(serviceData);
-        
-        $('#inventoryTable').DataTable();  
+
+        $('#inventoryTable').DataTable();
     }
-       }); 
+       });
    }
 });
 
-// update inventory 
+// update inventory
 $('#updateInventory').click(function(){
-    
+
 $("#loaderText").text("Updating");
     var lastChar = region[region.length -1];
     if(lastChar>='a'&& lastChar<='z'){
-        region=region.slice(0,-1);       
+        region=region.slice(0,-1);
     }
     $.ajax({
         url:"https://8pys1qif2d.execute-api.us-east-2.amazonaws.com/v1/environment?env="+environment+"&region="+region,
         datatype:'JSON',
-        success:function(response){  
+        success:function(response){
            $("#loaderText").text("Loading");
             $('#envDa').change();
              $('#success_tic').modal('show');
@@ -801,9 +801,9 @@ $("#loaderText").text("Updating");
 
 function clickEvent(e){
      var viewTag=$(e).data("value");
-    
+
     $('#viewTagVal').html(viewTag);
-    
+
 }
 
 </script>
