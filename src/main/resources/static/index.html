@@ -621,7 +621,7 @@ table.table .avatar {
              $.ajax({
     type:'GET',
      
-    url:'https://xrx4jghx2b.execute-api.us-east-2.amazonaws.com/v1/getenvironment/1',
+    url:'https://qdylk5zwta.execute-api.us-east-1.amazonaws.com/dev/environment',
     datatype:'JSON',
     success:function(response){
    
@@ -643,7 +643,7 @@ $('#envDa').on('change', function (e) {
     $.ajax({
     type:'GET',
     
-    url:'https://xrx4jghx2b.execute-api.us-east-2.amazonaws.com/v1/environment/'+environment,
+    url:'https://qdylk5zwta.execute-api.us-east-1.amazonaws.com/dev/details?environment='+environment,
     datatype:'JSON',
     success:function(response){
     
