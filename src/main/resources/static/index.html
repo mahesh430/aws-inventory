@@ -643,7 +643,7 @@ $('#envDa').on('change', function (e) {
     $.ajax({
     type:'GET',
 
-    url:'https://qdylk5zwta.execute-api.us-east-1.amazonaws.com/dev/details?environment='+environment,
+    url:'https://-api.us-east-1.amazonaws.com/dev/details?environment='+environment,
     datatype:'JSON',
     success:function(response){
 
@@ -726,7 +726,7 @@ $('#tenId').on('change', function (e) {
 
     $.ajax({
     type:'GET',
-    url:'https://xrx4jghx2b.execute-api.us-east-2.amazonaws.com/v1/tenantid/'+tenantId,
+    url:'https://xrx4j-api.us-east-2.amazonaws.com/v1/tenantid/'+tenantId,
     datatype:'JSON',
     success:function(response){
 
@@ -786,7 +786,7 @@ $("#loaderText").text("Updating");
         region=region.slice(0,-1);
     }
     $.ajax({
-        url:"https://8pys1qif2d.execute-api.us-east-2.amazonaws.com/v1/environment?env="+environment+"&region="+region,
+        url:"https://.com/v1/environment?env="+environment+"&region="+region,
         datatype:'JSON',
         success:function(response){
            $("#loaderText").text("Loading");
