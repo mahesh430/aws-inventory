@@ -3,7 +3,7 @@ pipeline {
     environment {
         DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials')
         IMAGE_TAG = "mahesh430/aws-inventory-app:${BUILD_NUMBER}"
-        SONAR_URL = "http://54.91.64.209/:9000/"
+        SONAR_URL = "http://54.91.64.209:9000/"
         
 
     }
