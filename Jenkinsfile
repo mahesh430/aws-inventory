@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials')
-        IMAGE_TAG = "mahesh430/avw-inventory:${BUILD_NUMBER}"
+        IMAGE_TAG = "mahesh430/aws-inventory:${BUILD_NUMBER}"
         SONAR_URL = "http://54.204.107.215:9000/"
         
 
@@ -17,7 +17,6 @@ pipeline {
         }
         stage('Build and Test') {
             steps {
-                sh 'ls -ltr'
                 sh 'mvn clean package'
             }
         }
