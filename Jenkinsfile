@@ -8,13 +8,13 @@ pipeline {
 
     }
     stages {
-        stage('Checkout') {
-            steps {
-                script {
-                    git branch: 'main', url: 'https://github.com/Dafik-G-2/aws-inventory-project.git'
-                }
-            }
-        }
+        // stage('Checkout') {
+        //     steps {
+        //         script {
+        //             git branch: 'main', url: 'https://github.com/Dafik-G-2/aws-inventory-project.git'
+        //         }
+        //     }
+        // }
         stage('Build and Test') {
             steps {
                 sh 'ls -lrt'
