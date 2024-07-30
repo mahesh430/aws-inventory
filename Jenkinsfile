@@ -2,8 +2,8 @@ pipeline {
     agent any
     environment {
         DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials')
-        IMAGE_TAG = "mahesh430/aws-inventory-app:${BUILD_NUMBER}"
-        SONAR_URL = "http://54.91.64.209:9000/"
+        IMAGE_TAG = "Dafik-G-2/aws-inventory-project:${BUILD_NUMBER}"
+        SONAR_URL = "http://23.20.124.58:9000/"
         
 
     }
@@ -11,7 +11,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    git branch: 'main', url: 'https://github.com/mahesh430/aws-inventory.git'
+                    git branch: 'main', url: 'https://github.com/Dafik-G-2/aws-inventory-project.git'
                 }
             }
         }
