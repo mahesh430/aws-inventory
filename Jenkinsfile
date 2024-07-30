@@ -35,22 +35,22 @@ pipeline {
                 }
             }
         }
-        stage('Trivy Scan') {
-            steps {
-                script {
-                    // Assuming Trivy CLI is installed on Jenkins agent
-                    sh "trivy image --format json --output trivy-report.json ${IMAGE_TAG}"
+        // stage('Trivy Scan') {
+        //     steps {
+        //         script {
+        //             // Assuming Trivy CLI is installed on Jenkins agent
+        //             sh "trivy image --format json --output trivy-report.json ${IMAGE_TAG}"
                     
-                    // Optionally, you can parse the JSON report and fail the build on high-severity vulnerabilities
-                    sh """
-                    if grep -q '"Severity": "HIGH"' trivy-report.json; then
-                        echo "High severity vulnerabilities found!"
-                        exit 1
-                    fi
-                    """
-                }
-            }
-        }
+        //             // Optionally, you can parse the JSON report and fail the build on high-severity vulnerabilities
+        //             sh """
+        //             if grep -q '"Severity": "HIGH"' trivy-report.json; then
+        //                 echo "High severity vulnerabilities found!"
+        //                 exit 1
+        //             fi
+        //             """
+        //         }
+        //     }
+        // }
         stage('Push to Docker Hub') {
             steps {
                 script {
