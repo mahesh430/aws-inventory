@@ -18,7 +18,7 @@ pipeline {
         stage('Build and Test') {
             steps {
                 sh 'mvn -v'
-                sh 'mvn clean package'
+                sh 'mvn package'
             }
         }
         stage('Static Code Analysis') {
