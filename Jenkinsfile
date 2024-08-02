@@ -18,6 +18,8 @@ pipeline {
         stage('Build and Test') {
             steps {
                 sh 'mvn -v'
+                sh 'ls -lrt'
+                sh 'mvn clean install'
                 sh 'mvn package'
             }
         }
