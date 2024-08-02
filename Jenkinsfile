@@ -17,7 +17,6 @@ pipeline {
         }
         stage('Build and Test') {
             steps {
-                sh 'ls -lrt'
                 sh 'mvn -v'
                 sh 'mvn clean package'
             }
