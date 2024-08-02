@@ -4,6 +4,9 @@ pipeline {
         DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials')
         IMAGE_TAG = "mahesh430/aws-inventory-app:${BUILD_NUMBER}"
         SONAR_URL = "http://54.91.64.209:9000/"
+        GIT_USER_NAME = "mahesh430"
+        GIT_REPO_NAME = "https://github.com/mahesh430/aws-inventory-k8s.git"
+        
         
 
     }
@@ -60,20 +63,36 @@ pipeline {
                 }
             }
         }
+        stage('Update Deployment File') {
+    steps {
+        withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+            script {
+                try {
+                    sh '''
+                        set -e
+                        cd ~
+                        pwd
+                        git clone https://github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git
+                        cd ${GIT_REPO_NAME}
+                        # Update the deployment file
+                        sed -i "s|image: mahesh430/aws-inventory-app:*|image: mahesh430/aws-inventory-app:${BUILD_NUMBER}|g" k8s/deployment.yml
+                        git config user.email "umamahesh690@gmail.com"
+                        git config user.name "Mahesh"
+                        git add k8s/deployment.yml
+                        git commit -m "Update deployment file with image version ${BUILD_NUMBER}"
+                        git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
+                    '''
+                } catch (Exception e) {
+                    echo "Error occurred during deployment file update: ${e.getMessage()}"
+                    throw e
+                }
+            }
+        }
+    }
+}
+b
     
     }
-   // post {
-       // always {
-       //      // Clean up the workspace
-       //      deleteDir()
-
-       //      // Docker cleanup commands (consider adding if appropriate)
-       //      script {
-       //          sh "docker container prune -f"
-       //          sh "docker image prune -f"
-       //          sh "docker volume prune -f"
-       //      }
-       //  }
-  //  }
+  
 }
 
