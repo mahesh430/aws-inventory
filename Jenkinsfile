@@ -23,7 +23,7 @@ pipeline {
         stage('Static Code Analysis') {
             steps {
                 withCredentials([string(credentialsId: 'sonar-creds', variable: 'TOKEN')]) {
-                    sh "mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}"
+                    sh "mvn sonar:sonar -Dsonar.login=$TOKEN -Dsonar.host.url=${SONAR_URL}"
                 }
             }
         }
