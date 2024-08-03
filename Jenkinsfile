@@ -3,7 +3,7 @@ pipeline {
        environment {
            DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials')
            IMAGE_TAG = "Dafik-G-2/aws-inventory-project-app:${BUILD_NUMBER}"
-           SONAR_URL = "http://34.227.53.214:9000/"
+           SONAR_URL = "http://34.204.40.173:9000/"
         
 
        }
@@ -17,9 +17,6 @@ pipeline {
         }
         stage('Build and Test') {
             steps {
-                sh 'mvn -v'
-                sh 'ls -lrt'
-                sh 'mvn clean install'
                 sh 'mvn package'
             }
         }
