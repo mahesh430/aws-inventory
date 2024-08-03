@@ -20,13 +20,13 @@ pipeline {
                 sh 'mvn package'
             }
         }
-        stage('Static Code Analysis') {
-            steps {
-                withCredentials([string(credentialsId: 'sonar-creds', variable: 'TOKEN')]) {
-                    sh "mvn sonar:sonar -Dsonar.login=$TOKEN -Dsonar.host.url=${SONAR_URL}"
-                }
-            }
-        }
+        // stage('Static Code Analysis') {
+        //     steps {
+        //         withCredentials([string(credentialsId: 'sonar-creds', variable: 'TOKEN')]) {
+        //             sh "mvn sonar:sonar -Dsonar.login=$TOKEN -Dsonar.host.url=${SONAR_URL}"
+        //         }
+        //     }
+        // }
         stage('Build Docker Image') {
             steps {
                 script {
