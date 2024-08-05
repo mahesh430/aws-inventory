@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Build and Test') {
             steps {
-                sh 'mvn package'
+                cmd 'mvn package'
             }
         }
         // stage('Static Code Analysis') {
