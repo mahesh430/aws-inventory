@@ -71,7 +71,7 @@ pipeline {
                                 git clone https://github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git
                                 cd ${GIT_REPO_NAME}
                                 # Update the deployment file
-                                sed -i "s|image: mahesh430/aws-inventory-app:*|image: mahesh430/aws-inventory-app:${BUILD_NUMBER}|g" k8s/deployment.yml
+                                sed -i '' 's|image: mahesh430/aws-inventory-app:.*|image: mahesh430/aws-inventory-app:${BUILD_NUMBER}|g' k8s/deployment.yml
                                 git config user.email "umamahesh690@gmail.com"
                                 git config user.name "Mahesh"
                                 git add k8s/deployment.yml
