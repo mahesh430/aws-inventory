@@ -90,7 +90,6 @@ awspipeline {
         }
     }
 }
-b
     
     }
   
