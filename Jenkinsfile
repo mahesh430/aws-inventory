@@ -30,7 +30,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker build -t ${IMAGE_TAG} ."
+                    bat "docker build -t ${IMAGE_TAG} ."
                 }
             }
         }
@@ -53,8 +53,8 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 script {
-                    sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login --username ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
-                    sh "docker push ${IMAGE_TAG}"
+                    bat "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login --username ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
+                    bat "docker push ${IMAGE_TAG}"
                     // sh "docker rmi ${IMAGE_TAG}"
                 }
             }
