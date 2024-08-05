@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Build and Test') {
             steps {
-                cmd 'mvn package'
+                bat 'mvn package'
             }
         }
         // stage('Static Code Analysis') {
