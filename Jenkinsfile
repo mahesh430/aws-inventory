@@ -1,9 +1,9 @@
-pipeline {
+awspipeline {
     agent any
     environment {
         DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials')
         IMAGE_TAG = "mahesh430/aws-inventory-app:${BUILD_NUMBER}"
-        SONAR_URL = "http://54.91.64.209:9000/"
+        SONAR_URL = "http://54.226.161.29:9000/"
         GIT_USER_NAME = "mahesh430"
         GIT_REPO_NAME = "https://github.com/mahesh430/aws-inventory-k8s.git"
         
