@@ -3,7 +3,7 @@ pipeline {
        environment {
            DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials')
            IMAGE_TAG = "Dafik-G-2/aws-inventory-project-app:${BUILD_NUMBER}"
-           // SONAR_URL = "http://100.27.213.249:9000/"
+           SONAR_URL = "http://65.2.71.169:9000/"
         
 
        }
@@ -20,13 +20,13 @@ pipeline {
                 bat 'mvn package'
             }
         }
-        // stage('Static Code Analysis') {
-        //     steps {
-        //         withCredentials([string(credentialsId: 'sonar-creds', variable: 'TOKEN')]) {
-        //             sh "mvn sonar:sonar -Dsonar.login=$TOKEN -Dsonar.host.url=${SONAR_URL}"
-        //         }
-        //     }
-        // }
+        stage('Static Code Analysis') {
+            steps {
+                withCredentials([string(credentialsId: 'sonar-creds', variable: 'TOKEN')]) {
+                    bat "mvn sonar:sonar -Dsonar.login=$TOKEN -Dsonar.host.url=${SONAR_URL}"
+                }
+            }
+        }
         stage('Build Docker Image') {
             steps {
                 script {
