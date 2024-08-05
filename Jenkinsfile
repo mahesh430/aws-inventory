@@ -65,7 +65,7 @@ pipeline {
                     script {
                         try {
                             sh '''
-                                set -e
+                                  set -e
                                 cd ~
                                 pwd
                                 rm -rf ${GIT_REPO_NAME}
@@ -77,9 +77,7 @@ pipeline {
                                 git config user.name "Mahesh"
                                 git add k8s/deployment.yml
                                 git commit -m "Update deployment file with image version ${BUILD_NUMBER}"
-                                // git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
                                 git push https://${GITHUB_TOKEN}:x-oauth-basic@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
-
                             '''
                         } catch (Exception e) {
                             echo "Error occurred during deployment file update: ${e.getMessage()}"
