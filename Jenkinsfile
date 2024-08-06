@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent any 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials')
         IMAGE_TAG = "mahesh430/aws-inventory-app:${BUILD_NUMBER}"
