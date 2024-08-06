@@ -75,7 +75,8 @@ pipeline {
                                 sed -i '' 's|image: mahesh430/aws-inventory-app:.*|image: mahesh430/aws-inventory-app:${BUILD_NUMBER}|g' k8s/deployment.yml
                                 git config user.email "umamahesh690@gmail.com"
                                 git config user.name "Mahesh"
-                                git add deployment.yml
+                                // git add ks8/deployment.yml
+                                git add .
                                 git commit -m "Update deployment file with image version ${BUILD_NUMBER}"
                                 // git push https://${GITHUB_TOKEN}:x-oauth-basic@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
                                 // git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
