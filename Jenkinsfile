@@ -28,13 +28,13 @@ pipeline {
         //         }
         //     }
         // }
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    bat "docker build -t ${IMAGE_TAG} ."
-                }
-            }
-        }
+        // stage('Build Docker Image') {
+        //     steps {
+        //         script {
+        //             bat "docker build -t ${IMAGE_TAG} ."
+        //         }
+        //     }
+        // }
         // stage('Trivy Scan') {
         //     steps {
         //         script {
@@ -64,8 +64,8 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'docker-hub-token', variable: 'DOCKER_HUB_TOKEN')]) {
                     bat "docker build -t ${IMAGE_TAG} ."
-                    // bat 'echo $DOCKER_HUB_TOKEN | docker login -u $DOCKER_HUB_USERNAME --password-stdin'
-                    echo "dckr_pat_yIc3f9L7j3j2APOlHKXTq20NQvA" | docker login -u "dafik15" --password-stdin
+                    bat 'echo $DOCKER_HUB_TOKEN | docker login -u $DOCKER_HUB_USERNAME --password-stdin'
+                    // echo "dckr_pat_yIc3f9L7j3j2APOlHKXTq20NQvA" | docker login -u "dafik15" --password-stdin
                     bat "docker push ${IMAGE_TAG}"
                 }
             }
