@@ -2,7 +2,7 @@ pipeline {
     agent any
        environment {
            DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials')
-           IMAGE_TAG = "Dafik-G-2/aws-inventory-project-app:${BUILD_NUMBER}"
+           IMAGE_TAG = "dafik15/aws-inventory-project-app:${BUILD_NUMBER}"
            DOCKER_HUB_USERNAME = 'dafik15' 
            // SONAR_URL = "http://65.2.71.169:9000/"
         
