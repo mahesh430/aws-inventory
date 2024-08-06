@@ -3,7 +3,7 @@ pipeline {
        environment {
            DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials')
            IMAGE_TAG = "dafik15/aws-inventory-project-app:${BUILD_NUMBER}"
-           DOCKER_HUB_USERNAME = 'dafik15' 
+           // DOCKER_HUB_USERNAME = 'dafik15' 
            // SONAR_URL = "http://65.2.71.169:9000/"
         
 
@@ -28,13 +28,13 @@ pipeline {
         //         }
         //     }
         // }
-        // stage('Build Docker Image') {
-        //     steps {
-        //         script {
-        //             bat "docker build -t ${IMAGE_TAG} ."
-        //         }
-        //     }
-        // }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    bat "docker build -t ${IMAGE_TAG} ."
+                }
+            }
+        }
         // stage('Trivy Scan') {
         //     steps {
         //         script {
@@ -51,14 +51,12 @@ pipeline {
         //         }
         //     }
         // }
-        stage('Docker Login') {
+        stage('Push to Docker Hub') {
             steps {
-                // withCredentials([string(credentialsId: 'docker-hub-token', variable: 'DOCKER_HUB_TOKEN')]) {
-                    // bat "echo $DOCKER_HUB_TOKEN | docker login -u $DOCKER_HUB_USERNAME --password-stdin"
-                    bat "echo "dckr_pat_yIc3f9L7j3j2APOlHKXTq20NQvA" | docker login -u "dafik15" --password-stdin"
-                    bat "docker build -t ${IMAGE_TAG} ."
-                    bat "docker images"
+                script {
+                    bat "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login --username ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
                     bat "docker push ${IMAGE_TAG}"
+                    bat "docker rmi ${IMAGE_TAG}"
                 }
             }
         }
