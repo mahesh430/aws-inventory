@@ -56,6 +56,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'docker-hub-token', variable: 'DOCKER_HUB_TOKEN')]) {
                     bat "echo $DOCKER_HUB_TOKEN | docker login -u $DOCKER_HUB_USERNAME --password-stdin"
                     bat "docker build -t ${IMAGE_TAG} ."
+                    bat "docker images"
                     bat "docker push ${IMAGE_TAG}"
                 }
             }
