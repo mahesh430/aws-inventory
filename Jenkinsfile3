@@ -62,10 +62,17 @@ pipeline {
         // }
           stage('Push to Docker Hub') {
             steps {
-                script {
-                    bat "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login --username mahesh430 --password-stdin"
-                    bat "docker push ${IMAGE_TAG}"
-                    bat "docker rmi ${IMAGE_TAG}"
+                    withCredentials([string(credentialsId: 'docker-hub-token', variable: 'DOCKERHUB_CREDENTIALS_PSW')]) {
+                    script {
+                        // Login to Docker Hub
+                        bat 'echo %DOCKERHUB_CREDENTIALS_PSW% | docker login --username %DOCKER_HUB_USERNAME% --password-stdin'
+
+                        // Push Docker Image
+                        bat 'docker push %IMAGE_TAG%'
+
+                        // Remove Docker Image
+                        bat 'docker rmi %IMAGE_TAG%'
+                    }
                 }
             }
         }
