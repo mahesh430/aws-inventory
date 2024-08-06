@@ -54,7 +54,7 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 script {
-                    bat "echo "Dafik@1512" | docker login --username ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
+                    bat "echo 'Dafik@1512' | docker login --username ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
                     bat "docker push ${IMAGE_TAG}"
                     bat "docker rmi ${IMAGE_TAG}"
                 }
