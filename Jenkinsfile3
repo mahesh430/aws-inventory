@@ -63,9 +63,9 @@ pipeline {
           stage('Push to Docker Hub') {
             steps {
                 script {
-                    sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login --username mahesh430 --password-stdin"
-                    sh "docker push ${IMAGE_TAG}"
-                    sh "docker rmi ${IMAGE_TAG}"
+                    bat "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login --username mahesh430 --password-stdin"
+                    bat "docker push ${IMAGE_TAG}"
+                    bat "docker rmi ${IMAGE_TAG}"
                 }
             }
         }
