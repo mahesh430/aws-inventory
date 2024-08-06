@@ -3,6 +3,7 @@ pipeline {
        environment {
            DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials')
            IMAGE_TAG = "Dafik-G-2/aws-inventory-project-app:${BUILD_NUMBER}"
+           DOCKER_HUB_USERNAME = 'dafik15' 
            // SONAR_URL = "http://65.2.71.169:9000/"
         
 
@@ -27,13 +28,13 @@ pipeline {
         //         }
         //     }
         // }
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    bat "docker build -t ${IMAGE_TAG} ."
-                }
-            }
-        }
+        // stage('Build Docker Image') {
+        //     steps {
+        //         script {
+        //             bat "docker build -t ${IMAGE_TAG} ."
+        //         }
+        //     }
+        // }
         // stage('Trivy Scan') {
         //     steps {
         //         script {
@@ -50,12 +51,12 @@ pipeline {
         //         }
         //     }
         // }
-        stage('Push to Docker Hub') {
+        stage('Docker Login') {
             steps {
-                script {
-                    bat "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login --username ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
+                withCredentials([string(credentialsId: 'docker-hub-token', variable: 'DOCKER_HUB_TOKEN')]) {
+                    bat "echo $DOCKER_HUB_TOKEN | docker login -u $DOCKER_HUB_USERNAME --password-stdin"
+                    bat "docker build -t ${IMAGE_TAG} ."
                     bat "docker push ${IMAGE_TAG}"
-                    bat "docker rmi ${IMAGE_TAG}"
                 }
             }
         }
