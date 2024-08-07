@@ -16,11 +16,11 @@ pipeline {
                 }
             }
         }
-        stage('Build and Test') {
-            steps {
-                bat 'mvn package'
-            }
-        }
+      //  stage('Build and Test') {
+       //     steps {
+        //        bat 'mvn package'
+         //   }
+       // }
         // stage('Static Code Analysis') {
         //     steps {
         //         withCredentials([string(credentialsId: 'sonar-creds', variable: 'TOKEN')]) {
@@ -60,10 +60,9 @@ pipeline {
         //         }
         //     }
         // }
-          stage('Push to Docker Hub') {
+       stage('Docker Login') {
             steps {
-                 script {
-                    // Execute the Docker login command using the credentials
+                script {
                     bat """
                     echo %DOCKER_CREDENTIALS_USR%
                     echo %DOCKER_CREDENTIALS_PSW%
