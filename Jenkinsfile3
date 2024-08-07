@@ -62,17 +62,13 @@ pipeline {
         // }
           stage('Push to Docker Hub') {
             steps {
-                    withCredentials([string(credentialsId: 'docker-hub-token', variable: 'DOCKERHUB_CREDENTIALS_PSW')]) {
-                    script {
-                        // Login to Docker Hub
-                        bat 'echo %DOCKERHUB_CREDENTIALS_PSW% | docker login --username %DOCKER_HUB_USERNAME% --password-stdin'
-
-                        // Push Docker Image
-                        bat 'docker push %IMAGE_TAG%'
-
-                        // Remove Docker Image
-                        bat 'docker rmi %IMAGE_TAG%'
-                    }
+                 script {
+                    // Execute the Docker login command using the credentials
+                    bat """
+                    echo %DOCKER_CREDENTIALS_USR%
+                    echo %DOCKER_CREDENTIALS_PSW%
+                    docker login -u %DOCKER_CREDENTIALS_USR% -p %DOCKER_CREDENTIALS_PSW% https://index.docker.io/v1/
+                    """
                 }
             }
         }
